@@ -1,12 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
+import AuthorizedRoutes from "./routes/Authorized";
+import NonAuthorizedRoutes from "./routes/NonAuthorized";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Router>
+        <Switch>
+            {NonAuthorizedRoutes.map((prop, key) => {
+                return prop.route;
+            })}
+            {AuthorizedRoutes.map((prop, key) => {
+                return prop.route;
+            })}
+        </Switch>
+    </Router>,
+    document.getElementById("root")
+);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
