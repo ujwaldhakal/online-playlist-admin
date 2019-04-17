@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import 'antd/dist/antd.css';
 import Login from './components/Login';
 import Test from './components/Test';
-
+import 'antd/dist/antd.css';
 
 const App = () => {
     return (
