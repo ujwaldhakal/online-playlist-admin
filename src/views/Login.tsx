@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginComponent from '../components/Login'
+import LoginComponent from '../components/Login/Login'
 
 interface CustomInputProps {
     currentMenu: string;
