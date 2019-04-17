@@ -1,13 +1,15 @@
+import 'antd/dist/antd.css';
 import './index.css';
 import React from "react";
 import ReactDOM from "react-dom";
-import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Switch} from "react-router-dom";
 import AuthorizedRoutes from "./routes/Authorized";
 import NonAuthorizedRoutes from "./routes/NonAuthorized";
+import App from './App'
 
 ReactDOM.render(
     <Router>
-        <Switch>
+        <Switch>            
             {NonAuthorizedRoutes.map((prop, key) => {
                 return prop.route;
             })}
@@ -15,7 +17,7 @@ ReactDOM.render(
                 return prop.route;
             })}
         </Switch>
-    </Router>,
+    </Router>
+    ,
     document.getElementById("root")
 );
-

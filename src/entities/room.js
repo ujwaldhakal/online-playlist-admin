@@ -19,7 +19,6 @@ class Room {
     }
 
     getBySlug(slug) {
-
         let url = 'rooms'+this.getFields()+`&slug=${slug}`;
         return this.requestOut.getPromise(url)
     }

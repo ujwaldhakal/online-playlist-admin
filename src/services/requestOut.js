@@ -1,6 +1,6 @@
 import axios from "axios";
 import Storage from "./storage";
-const baseUrl = process.env.REACT_APP_REST_API_LOCATION;
+const baseUrl = 'https://playlist.pagevamp.pv/'
 
 class RequestOut {
   constructor() {
@@ -18,7 +18,7 @@ class RequestOut {
 
   interceptHeader() {
     this.axios.defaults.headers.common["Authorization"] =
-      "Bearer " + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9wbGF5bGlzdC5wYWdldmFtcC5wdlwvbG9naW4iLCJpYXQiOjE1NTcwNTc1MDgsImV4cCI6MTU2MDY1NzUwOCwibmJmIjoxNTU3MDU3NTA4LCJqdGkiOiJaVzJJdTdyMzhaQ1VIbU9WIiwic3ViIjoiNTNiMTQ2NGEtNGU1OS0xMWU5LTlhY2YtMDI0MmFjMTMwMDE3IiwicHJ2IjoiYjdmZjdmZjQyNzYyMzhhYzI4ODQ5NDNiZWE3MDM2MmUxOTE3M2RjYSJ9.6yo8VTF_DUsO07b8zVv6t898_5lMM0MC24KrM-0PGjQ';
+      "Bearer " + this.storage.get('access_token');
   }
 
 
