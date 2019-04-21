@@ -36,7 +36,8 @@ export default class Login extends React.Component<{}, StateType> {
     render() {
         const {email, password} = this.state;
         return (
-            <Row type="flex" justify="center">
+            <Row type="flex" justify="center" className="test">
+                <Col span={6}></Col>
                 <Col span={6}>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Form.Item>
