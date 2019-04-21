@@ -1,0 +1,35 @@
+.login-container{
+    height: 100vh;
+    &--right{
+        height: 100%;
+        max-width: 450px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        justify-content: center;
+        flex-direction: column;
+    }
+    &--left{
+        background-image: url('https://images.unsplash.com/photo-1546594002-6d74adf4e040?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+    }
+    &-button{
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        margin-top: 5px;        
+    }
+    &-form{
+        width: 100%;
+    }
+    .ant-form-item{
+        margin-bottom: 5px;
+    }
+    &-error{
+        position: absolute;
+        top: 20px;
+    }
+}

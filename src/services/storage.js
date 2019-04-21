@@ -4,7 +4,7 @@ let storage = localStorage,
 class Storage {
 
 
-    set(key, data) {
+    static set(key, data) {
         storage.setItem(prefix + key, data);
     }
 
