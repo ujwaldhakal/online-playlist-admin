@@ -20,7 +20,7 @@ const Authorized = ({RouteComponent , ...rest} : { RouteComponent : any, path : 
 
 const authorizedRoutes = [
 
-    {'route': <Authorized path="/" exact={true} key="welcome" RouteComponent={DJRoom}/>},
+    {'route': <Authorized path="/fuck" exact={true} key="welcome" RouteComponent={DJRoom}/>},
 
 ];
 
