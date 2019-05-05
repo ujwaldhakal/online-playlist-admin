@@ -21,6 +21,7 @@ class DjFloor extends React.Component<Props, State> {
         this.state = {
             room: false
         }
+        console.log("its here");
 
     }
 
