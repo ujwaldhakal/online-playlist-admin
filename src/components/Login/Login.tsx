@@ -1,8 +1,8 @@
 import React from 'react';
 import {Form, Icon, Input, Button, Checkbox, Row, Col} from 'antd';
 import {Link} from 'react-router-dom';
-import Auth from '../../services/auth';
-import Storage from '../../services/storage'
+// import Auth from '../../services/auth';
+// import Storage from '../../services/storage'
 import './login.scss';
 
 type StateType = {
