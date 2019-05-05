@@ -7,25 +7,32 @@ interface Props {
     props: any
 }
 
-class DjFloor extends React.Component<Props, {}> {
+interface State {
+    room: any
+}
+
+class DjFloor extends React.Component<Props, State> {
 
     room: any
 
     constructor(props: any) {
         super(props);
         this.room = new Room();
+        this.state = {
+            room: false
+        }
 
     }
 
     async componentDidMount() {
         try {
-            this.room = (await this.room.getBySlug(this.getSlug())).data[0];
+            let data = (await this.room.getBySlug(this.getSlug())).data[0];
+            this.setState({room: data});
 
         } catch (e) {
 
             console.log(e);
         }
-        console.log('about to send some req');
     }
 
     isRoomAdmin() {
@@ -36,8 +43,8 @@ class DjFloor extends React.Component<Props, {}> {
 
     renderDjCabin() {
 
-        if(this.isRoomAdmin()) {
-            return <Cabin/>;
+        if (this.isRoomAdmin()) {
+            return <Cabin room={this.state.room}/>;
         }
     }
 
@@ -48,14 +55,17 @@ class DjFloor extends React.Component<Props, {}> {
     render() {
         return (
             <div>
+                {this.state.room ?
                 <div>
-                    <h1> Currently playing playlist </h1>
-                </div>
+                    <div>
+                        <h1> Currently playing playlist </h1>
+                    </div>
 
-                <div>
-                    {this.renderDjCabin()}
-                    <RequestDj/>
-                </div>
+                    <div>
+                        {this.renderDjCabin()}
+                        <RequestDj/>
+                    </div>
+                </div> : null }
             </div>
         );
     }

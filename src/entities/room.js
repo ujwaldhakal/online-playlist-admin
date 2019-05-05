@@ -5,6 +5,7 @@ class Room {
     constructor() {
         this.fields = [
             'name',
+            'id',
             'slug',
             'dj_id',
             'created_at'
@@ -21,6 +22,12 @@ class Room {
 
         let url = 'rooms'+this.getFields()+`&slug=${slug}`;
         return this.requestOut.getPromise(url)
+    }
+
+    getCurrentPlaylist(slug)
+    {
+        let url = `rooms/${slug}/current-playlist`;
+        return this.requestOut.getPromise(url);
     }
 
 }

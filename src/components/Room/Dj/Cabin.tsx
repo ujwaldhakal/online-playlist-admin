@@ -1,11 +1,18 @@
 import React from 'react'
 import PlaylistList from './PlaylistList'
+import Player from './Player'
+import Room from './../../../entities/room'
 
 interface State {
     youtubelink: string;
 };
 
-class Cabin extends React.Component<{}, State> {
+interface Props {
+    room: any;
+}
+
+class Cabin extends React.Component<Props, State> {
+
 
     constructor(props: any) {
         super(props);
@@ -23,7 +30,7 @@ class Cabin extends React.Component<{}, State> {
             <div>
 
                 <h1>Its where the dj plays the music</h1>
-
+                <Player room={"Asd"} props={this.props}/>
                 <PlaylistList/>
             </div>
         );
