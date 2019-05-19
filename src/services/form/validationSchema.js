@@ -1,4 +1,4 @@
-import Yup from 'yup'
+import * as Yup from 'yup';
 
 export default function getYupValidationSchema(values) {
     return Yup.object().shape({
@@ -8,8 +8,5 @@ export default function getYupValidationSchema(values) {
         password: Yup.string()
           .min(6, `Password has to be longer than 6 characters!`)  
           .required('Password is required!'),
-        passwordConfirmation: Yup.string()
-          .oneOf([values.password], 'Passwords are not the same!')
-          .required('Password confirmation is required!'),
     })
 }

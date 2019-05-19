@@ -12,8 +12,6 @@ interface Props {
 }
 
 class Cabin extends React.Component<Props, State> {
-
-
     constructor(props: any) {
         super(props);
         this.state = {
@@ -21,15 +19,9 @@ class Cabin extends React.Component<Props, State> {
         };
     }
 
-    componentDidMount() {
-
-    }
-
     render() {
         return (
-            <div>
-
-                <h1>Its where the dj plays the music</h1>
+            <div>                 
                 <Player room={"Asd"} props={this.props}/>
                 <PlaylistList/>
             </div>

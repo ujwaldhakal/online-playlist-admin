@@ -1,0 +1,57 @@
+.room{
+    &-header{
+        background: #3f51b5;
+        height: 200px;
+        display: flex;
+        justify-content: center;    
+        padding-top: 45px;
+        align-items: flex-start;
+    
+        h1{
+            color: #fff;
+            margin-bottom: 0;
+        }
+    }
+    &-cabin{
+        max-width: 1140px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 50px;
+        margin-top: -60px;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,.1);
+    }
+    &-video{
+        width: 100%;
+        min-height: 50vh;
+    }
+    &-list{
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 30px;
+        
+        li{
+            border: 1px solid #eee;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+    &-form{        
+        form{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        button{
+            margin-left: 10px;
+        }
+    }
+}
+
+.text-left{
+    text-align: left;
+}

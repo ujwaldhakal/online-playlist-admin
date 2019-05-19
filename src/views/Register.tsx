@@ -13,16 +13,15 @@ export const Register = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={getYupValidationSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleRegister}
       render={RegisterComponent}
     />
   )
 }
 
-function onSubmit(values: any, props:any) {
-    props.validateForm();
-    props.setSubmitting(false);
-    console.log(props);
+function handleRegister(values: any, props:any) {    
+    props.setSubmitting(false);    
+    console.log(values);
     setTimeout(() => {
         console.log(values);
     }, 2000)

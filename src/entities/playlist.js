@@ -19,7 +19,6 @@ class Playlist {
     }
 
     getList() {
-
         let url = 'playlists' + this.getFields();
         return this.requestOut.getPromise(url)
     }

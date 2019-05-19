@@ -1,6 +1,8 @@
 import React from 'react'
 import Playlist from './../../../entities/playlist'
-import Storage from './../../../services/storage'
+import Storage from './../../../services/storage';
+import { Button } from 'antd'
+
 
 interface State {
     playlists: any
@@ -46,14 +48,13 @@ class PlaylistList extends React.Component<{}, State> {
         return (
 
             <div>
-                <h1>Playlist list</h1>
-                <ul>
-
+                <h1>Song list</h1>
+                <ul className="room-list">
                     {this.state.playlists.map((item: playlistObject, index: number) => {
-
                         return <li key={index}>
-                            <button onClick={() => this.playPlaylist(item.id)}> play</button>
+                            {/* <button > play</button> */}
                             {item.name} created by {item.created_by}
+                            <Button onClick={() => this.playPlaylist(item.id)} type="primary">Play</Button>                            
                         </li>
                     })}
                 </ul>

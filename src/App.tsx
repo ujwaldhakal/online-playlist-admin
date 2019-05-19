@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './components/Login/Login';
+import Login from '../src/views/Login';
 import {Test} from './components/Test';
 import { Register } from '../src/views/Register';
 import 'antd/dist/antd.css';
 import './App.css'
-
+import './app.scss';
 const App = () => {
     return (        
         <Router>

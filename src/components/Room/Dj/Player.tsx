@@ -43,7 +43,7 @@ class Player extends React.Component<Props, State> {
     render() {
         const opts = {
             height: '390',
-            width: '640',
+            width: '350',
             playerVars: { // https://developers.google.com/youtube/player_parameters
                 autoplay: 1
             }
@@ -52,6 +52,7 @@ class Player extends React.Component<Props, State> {
             <div>
                 {this.state.songList ?
                 <YouTube
+                    className="room-video"
                     videoId={this.getYoutubeId(this.state.songList[0].link)}
                     onEnd={this.onEnd}
                 />

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://playlist.pagevamp.pv';
+const baseUrl = 'https://playlist.pagevamp.pv';
 const getPromise = url => {
   return new Promise((resolve, reject) => {
     axios

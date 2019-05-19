@@ -2,19 +2,16 @@ import React from 'react';
 import RequestDj from './../components/Room/AddSong'
 import Cabin from '../components/Room/Dj/Cabin'
 import Room from './../entities/room'
-
+import '../components/Room/room.scss';
 interface Props {
     props: any
 }
-
 interface State {
     room: any
 }
-
 class DjFloor extends React.Component<Props, State> {
 
     room: any
-
     constructor(props: any) {
         super(props);
         this.room = new Room();
@@ -31,7 +28,6 @@ class DjFloor extends React.Component<Props, State> {
             this.setState({room: data});
 
         } catch (e) {
-
             console.log(e);
         }
     }
@@ -58,11 +54,11 @@ class DjFloor extends React.Component<Props, State> {
             <div>
                 {this.state.room ?
                 <div>
-                    <div>
-                        <h1> Currently playing playlist </h1>
+                    <div className="room-header">
+                        <h1> Current playlist </h1>
                     </div>
 
-                    <div>
+                    <div  className="room-cabin">
                         {this.renderDjCabin()}
                         <RequestDj/>
                     </div>
@@ -72,6 +68,4 @@ class DjFloor extends React.Component<Props, State> {
     }
 }
 
-
 export default DjFloor
-
