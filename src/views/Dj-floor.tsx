@@ -55,7 +55,7 @@ class DjFloor extends React.Component<Props, State> {
                 {this.state.room ?
                 <div>
                     <div className="room-header">
-                        <h1> Current playlist </h1>
+                        <h1> Currently playing  </h1>
                     </div>
 
                     <div  className="room-cabin">

@@ -1,6 +1,5 @@
 import React from 'react'
 import YouTube from 'react-youtube';
-import Room from "../../../entities/room";
 
 interface State {
     songList: any
@@ -8,17 +7,19 @@ interface State {
 
 interface Props {
     props: any;
-    room: any
+    room: any;
+    songList: any
 }
 
 class Player extends React.Component<Props, State> {
-    room: Room;
 
     constructor(props: any) {
+        console.log(props);
         super(props);
         this.onEnd = this.onEnd.bind(this);
-        this.room = new Room();
-        this.state = {songList: false}
+        this.state = {
+            songList: this.props.songList
+        }
     }
 
     getYoutubeId(url: string): any {
@@ -27,16 +28,25 @@ class Player extends React.Component<Props, State> {
         return (match && match[7].length == 11) ? match[7] : false;
     }
 
-    async componentDidMount() {
-        try {
-            let playlist = await this.room.getCurrentPlaylist(this.props.props.room.id);
-            this.setState({songList: playlist.data})
-        } catch (e) {
-            console.log(e);
-        }
+    getSongToPlay() {
+
     }
 
     onEnd() {
+
+        let data = this.state.songList;
+
+        data.map(function (item: any) {
+
+            console.log(item);
+            if (item.is_playing) {
+
+            }
+
+
+        });
+
+        console.log(data);
         console.log('yeah');
     }
 
@@ -51,12 +61,12 @@ class Player extends React.Component<Props, State> {
         return (
             <div>
                 {this.state.songList ?
-                <YouTube
-                    className="room-video"
-                    videoId={this.getYoutubeId(this.state.songList[0].link)}
-                    onEnd={this.onEnd}
-                />
-                    : false }
+                    <YouTube
+                        className="room-video"
+                        videoId={this.getYoutubeId(this.state.songList[0].link)}
+                        onEnd={this.onEnd}
+                    />
+                    : false}
             </div>
         )
     }

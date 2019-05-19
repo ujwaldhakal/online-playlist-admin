@@ -6,6 +6,7 @@ import { Button } from 'antd'
 
 interface State {
     playlists: any
+    songList : any
 }
 
 interface playlistObject {
@@ -14,18 +15,25 @@ interface playlistObject {
     id : string
 }
 
-class PlaylistList extends React.Component<{}, State> {
+interface Props {
+    room: any
+    songList : any
+}
+
+class PlaylistList extends React.Component<Props, State> {
 
     playlist: Playlist
     storage: Storage
 
     constructor(props: any) {
+        console.log(props);
         super(props);
         this.playlist = new Playlist();
         this.storage = new Storage;
         this.playPlaylist = this.playPlaylist.bind(this);
         this.state = {
-            playlists: []
+            playlists: [],
+            songList: this.props.songList
         }
     }
 
@@ -48,13 +56,12 @@ class PlaylistList extends React.Component<{}, State> {
         return (
 
             <div>
-                <h1>Song list</h1>
+                <h1>Songs on Queue</h1>
                 <ul className="room-list">
-                    {this.state.playlists.map((item: playlistObject, index: number) => {
+                    {this.state.songList.map((item: playlistObject, index: number) => {
                         return <li key={index}>
                             {/* <button > play</button> */}
                             {item.name} created by {item.created_by}
-                            <Button onClick={() => this.playPlaylist(item.id)} type="primary">Play</Button>                            
                         </li>
                     })}
                 </ul>
