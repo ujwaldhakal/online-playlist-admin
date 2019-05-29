@@ -25,7 +25,8 @@ class Room {
 
     getCurrentPlaylist(slug)
     {
-        let fields = ['id',
+        let fields = [
+            'id',
             'link',
             'created_at',
             'created_by',
@@ -34,7 +35,7 @@ class Room {
             'is_youtube_playlist_link',
             'is_playing']
 
-        fields = "?fields=" + fields.join(",");
+        fields = fields.join(",");
         let url = `rooms/${slug}/current-playlist`+'?fields='+fields;
         return this.requestOut.getPromise(url);
     }

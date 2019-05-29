@@ -1,8 +1,10 @@
 import React from 'react'
 import YouTube from 'react-youtube';
+import Playlist from './../../../entities/playlist'
 
 interface State {
     songList: any
+    currentSongToPlay: any
 }
 
 interface Props {
@@ -13,13 +15,19 @@ interface Props {
 
 class Player extends React.Component<Props, State> {
 
+    playlist : any;
+
     constructor(props: any) {
         console.log(props);
         super(props);
         this.onEnd = this.onEnd.bind(this);
         this.state = {
-            songList: this.props.songList
+            songList: this.props.songList,
+            currentSongToPlay: this.props.songList[0]
         }
+
+        this.playlist = new Playlist();
+        console.log(this.props.songList);
     }
 
     getYoutubeId(url: string): any {
@@ -34,20 +42,33 @@ class Player extends React.Component<Props, State> {
 
     onEnd() {
 
-        let data = this.state.songList;
+        let data = this.state.songList,
+            shouldPlayNextSong = false,
+            self = this;
+
 
         data.map(function (item: any) {
 
-            console.log(item);
             if (item.is_playing) {
-
+                item.is_playing = 0;
+                shouldPlayNextSong = true;
+                self.playlist.changeSong(item.playlist_id,item.id);
+                return item;
             }
+
+            if(!item.is_playing && shouldPlayNextSong) {
+                item.is_playing = 1;
+                shouldPlayNextSong = false;
+                self.setState({currentSongToPlay: item});
+            }
+
+            return item;
 
 
         });
 
-        console.log(data);
-        console.log('yeah');
+        this.setState({songList: data});
+
     }
 
     render() {
@@ -63,7 +84,14 @@ class Player extends React.Component<Props, State> {
                 {this.state.songList ?
                     <YouTube
                         className="room-video"
-                        videoId={this.getYoutubeId(this.state.songList[0].link)}
+                        videoId={this.getYoutubeId(this.state.currentSongToPlay.link)}
+                        opts={{
+                            height: '390',
+                            width: '640',
+                            playerVars: { // https://developers.google.com/youtube/player_parameters
+                                autoplay: 1
+                            }
+                        }}
                         onEnd={this.onEnd}
                     />
                     : false}

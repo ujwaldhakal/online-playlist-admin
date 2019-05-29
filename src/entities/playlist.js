@@ -23,6 +23,12 @@ class Playlist {
         return this.requestOut.getPromise(url)
     }
 
+    changeSong(playlistId, songId) {
+        let url = 'playlists/' + playlistId + '/song/auto-change?song_id=' + songId;
+        return this.requestOut.getPromise(url);
+
+    }
+
 }
 
 export default Playlist;
