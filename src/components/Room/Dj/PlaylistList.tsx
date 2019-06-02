@@ -2,6 +2,7 @@ import React from 'react'
 import Playlist from './../../../entities/playlist'
 import Storage from './../../../services/storage';
 import { Button } from 'antd'
+import { Avatar } from 'antd';
 
 
 interface State {
@@ -12,6 +13,9 @@ interface State {
 interface playlistObject {
     name: string,
     created_by: string,
+    title: string,
+    cover_image: string,
+    link: string,
     id : string
 }
 
@@ -30,7 +34,6 @@ class PlaylistList extends React.Component<Props, State> {
         super(props);
         this.playlist = new Playlist();
         this.storage = new Storage;
-        this.playPlaylist = this.playPlaylist.bind(this);
         this.state = {
             playlists: [],
             songList: this.props.songList
@@ -46,10 +49,13 @@ class PlaylistList extends React.Component<Props, State> {
         }
     }
 
-    playPlaylist(e : any)
-    {
-        this.storage.set()
-        console.log(e);
+    async componentWillReceiveProps(props : any) {
+
+        // if(props.son) {
+        //     await this.loadCurrentPlaylist();
+        // }
+        // console.log('old props' , this.props);
+        // console.log('new props' , props);
     }
 
     render() {
@@ -60,8 +66,10 @@ class PlaylistList extends React.Component<Props, State> {
                 <ul className="room-list">
                     {this.state.songList.map((item: playlistObject, index: number) => {
                         return <li key={index}>
-                            {/* <button > play</button> */}
-                            {item.name} created by {item.created_by}
+                            <img src={item.cover_image} />
+                            <a href={item.link} target="_blank">
+                            {item.title} added by {item.created_by}
+                            </a>
                         </li>
                     })}
                 </ul>

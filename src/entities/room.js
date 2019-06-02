@@ -28,6 +28,8 @@ class Room {
         let fields = [
             'id',
             'link',
+            'title',
+            'cover_image',
             'created_at',
             'created_by',
             'playlist_id',
@@ -38,6 +40,11 @@ class Room {
         fields = fields.join(",");
         let url = `rooms/${slug}/current-playlist`+'?fields='+fields;
         return this.requestOut.getPromise(url);
+    }
+
+    addSongToDefaultPlaylist(roomId,songLink)
+    {
+        return this.requestOut.postPromise(`rooms/${roomId}/default/playlist/addsong`,{song_link: songLink})
     }
 
 }

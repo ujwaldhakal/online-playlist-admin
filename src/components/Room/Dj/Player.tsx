@@ -15,10 +15,9 @@ interface Props {
 
 class Player extends React.Component<Props, State> {
 
-    playlist : any;
+    playlist: any;
 
     constructor(props: any) {
-        console.log(props);
         super(props);
         this.onEnd = this.onEnd.bind(this);
         this.state = {
@@ -27,7 +26,6 @@ class Player extends React.Component<Props, State> {
         }
 
         this.playlist = new Playlist();
-        console.log(this.props.songList);
     }
 
     getYoutubeId(url: string): any {
@@ -52,11 +50,11 @@ class Player extends React.Component<Props, State> {
             if (item.is_playing) {
                 item.is_playing = 0;
                 shouldPlayNextSong = true;
-                self.playlist.changeSong(item.playlist_id,item.id);
+                self.playlist.changeSong(item.playlist_id, item.id);
                 return item;
             }
 
-            if(!item.is_playing && shouldPlayNextSong) {
+            if (!item.is_playing && shouldPlayNextSong) {
                 item.is_playing = 1;
                 shouldPlayNextSong = false;
                 self.setState({currentSongToPlay: item});
@@ -81,7 +79,7 @@ class Player extends React.Component<Props, State> {
         }
         return (
             <div>
-                {this.state.songList ?
+                {this.state.songList && this.state.currentSongToPlay ?
                     <YouTube
                         className="room-video"
                         videoId={this.getYoutubeId(this.state.currentSongToPlay.link)}

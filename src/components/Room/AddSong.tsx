@@ -1,11 +1,19 @@
 import React from 'react'
 import { Input, Tooltip, Icon, Button } from 'antd';
+import Room from './../../entities/room'
 
 interface State {
     youtubelink: string;
 };
 
-class AddSong extends React.Component<{}, State> {
+interface Props {
+    room: any,
+    songAdded : any
+}
+
+class AddSong extends React.Component<Props, State> {
+
+    room : Room;
 
     constructor(props: any) {
         super(props);
@@ -14,6 +22,7 @@ class AddSong extends React.Component<{}, State> {
         this.state = {
             youtubelink: ""
         };
+        this.room = new Room();
     }
 
 
@@ -23,11 +32,17 @@ class AddSong extends React.Component<{}, State> {
         console.log(e.target.value);
     }
 
-    submit(e: React.FormEvent<HTMLFormElement>) {
-
-        console.log(e);
-        console.log(this.state.youtubelink)
+    async submit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        try {
+            await this.room.addSongToDefaultPlaylist(this.props.room.id,this.state.youtubelink);
+            this.setState({youtubelink: ''});
+            this.props.songAdded();
+        } catch (error) {
+            console.log(error);
+        }
+
 
     }
 

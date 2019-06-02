@@ -7,18 +7,19 @@ interface Props {
     props: any
 }
 interface State {
-    room: any
+    room: any,
+    hasSongAdded: boolean
 }
 class DjFloor extends React.Component<Props, State> {
-
     room: any
     constructor(props: any) {
         super(props);
         this.room = new Room();
         this.state = {
-            room: false
+            room: false,
+            hasSongAdded: false,
         }
-        console.log("its here");
+        this.songAdded= this.songAdded.bind(this);
 
     }
 
@@ -33,19 +34,22 @@ class DjFloor extends React.Component<Props, State> {
     }
 
     isRoomAdmin() {
-        // return this.room.dj_id === '123123'
-        // this.room
         return true;
     }
 
-    renderDjCabin() {
+    songAdded() {
+        this.setState({hasSongAdded: true});
+        console.log("yes song has been added");
+    }
 
+    renderDjCabin() {
         if (this.isRoomAdmin()) {
-            return <Cabin room={this.state.room}/>;
+            return <Cabin room={this.state.room} hasSongAdded={this.state.hasSongAdded}/>;
         }
     }
 
     getSlug(): string {
+
         return this.props.props.match.params.slug;
     }
 
@@ -57,10 +61,9 @@ class DjFloor extends React.Component<Props, State> {
                     <div className="room-header">
                         <h1> Currently playing  </h1>
                     </div>
-
                     <div  className="room-cabin">
                         {this.renderDjCabin()}
-                        <RequestDj/>
+                        <RequestDj room={this.state.room} songAdded={this.songAdded}/>
                     </div>
                 </div> : null }
             </div>

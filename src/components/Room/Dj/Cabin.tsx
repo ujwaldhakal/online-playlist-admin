@@ -10,6 +10,7 @@ interface State {
 
 interface Props {
     room: any;
+    hasSongAdded : any
 }
 
 class Cabin extends React.Component<Props, State> {
@@ -26,12 +27,27 @@ class Cabin extends React.Component<Props, State> {
     }
 
     async componentDidMount() {
+        await this.loadCurrentPlaylist();
+    }
+
+    async loadCurrentPlaylist( )
+    {
         try {
             let playlist = await this.room.getCurrentPlaylist(this.props.room.id);
             this.setState({songList: playlist.data})
+            console.log("setting state of new data");
         } catch (e) {
             console.log(e);
         }
+    }
+
+    async componentWillReceiveProps(props : any) {
+
+        if(props.hasSongAdded) {
+            await this.loadCurrentPlaylist();
+        }
+        console.log('old props' , this.props);
+        console.log('new props' , props);
     }
 
     render() {
