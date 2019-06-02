@@ -24,12 +24,16 @@ class LoginView extends React.Component<any, any> {
         console.log("mounted");
     }
 
-    handleSubmit = async(values: any, props:any) => {            
-        const res = (await Auth.login(values)).data;        
-        this.storage.set("access_token", res.access_token);
-        setTimeout(()=>{            
-            this.props.history.push('/pagevamp2/djroom');
-        },1000)        
+    handleSubmit = async(values: any, props:any) => {       
+        try{
+            const res = (await Auth.login(values)).data;        
+            this.storage.set("access_token", res.access_token);
+            setTimeout(()=>{            
+                this.props.history.push('/pagevamp2/djroom');
+            },1000)        
+        }catch(e){
+            console.log(e);
+        }
     }
 
     render(){

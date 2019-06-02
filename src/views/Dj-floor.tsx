@@ -2,12 +2,14 @@ import React from 'react';
 import RequestDj from './../components/Room/AddSong'
 import Cabin from '../components/Room/Dj/Cabin'
 import Room from './../entities/room'
+import { Button } from 'antd';
 import '../components/Room/room.scss';
 interface Props {
     props: any
 }
 interface State {
-    room: any
+    room: any,
+    hasSongAdded: boolean
 }
 class DjFloor extends React.Component<Props, State> {
     room: any
@@ -15,8 +17,10 @@ class DjFloor extends React.Component<Props, State> {
         super(props);
         this.room = new Room();
         this.state = {
-            room: false
+            room: false,
+            hasSongAdded: false,
         }
+        this.songAdded= this.songAdded.bind(this);
 
     }
 
@@ -34,6 +38,14 @@ class DjFloor extends React.Component<Props, State> {
         return true;
     }
 
+    songAdded() {
+        this.setState({hasSongAdded: true});
+        console.log("yes song has been added");
+    }
+
+    handleRedirect = () => {
+        this.props.props.history.push("/settings");
+    }
 
     renderDjCabin() {
         if (this.isRoomAdmin()) {
