@@ -22,6 +22,7 @@ interface playlistObject {
 interface Props {
     room: any
     songList : any
+    hasSongAdded: boolean
 }
 
 class PlaylistList extends React.Component<Props, State> {
@@ -51,11 +52,9 @@ class PlaylistList extends React.Component<Props, State> {
 
     async componentWillReceiveProps(props : any) {
 
-        // if(props.son) {
-        //     await this.loadCurrentPlaylist();
-        // }
-        // console.log('old props' , this.props);
-        // console.log('new props' , props);
+        if(props.songList.length !== this.props.songList.length) {
+            this.setState({songList : props.songList})
+        }
     }
 
     render() {

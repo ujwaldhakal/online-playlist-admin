@@ -37,7 +37,7 @@ class AddSong extends React.Component<Props, State> {
 
         try {
             await this.room.addSongToDefaultPlaylist(this.props.room.id,this.state.youtubelink);
-            this.setState({youtubelink: ''});
+            // this.setState({youtubelink: ''});
             this.props.songAdded();
         } catch (error) {
             console.log(error);

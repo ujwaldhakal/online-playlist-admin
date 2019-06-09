@@ -45,12 +45,11 @@ class Player extends React.Component<Props, State> {
             self = this;
 
 
+        self.playlist.changeSong(this.state.currentSongToPlay.playlist_id, this.state.currentSongToPlay.id);
         data.map(function (item: any) {
-
             if (item.is_playing) {
                 item.is_playing = 0;
                 shouldPlayNextSong = true;
-                self.playlist.changeSong(item.playlist_id, item.id);
                 return item;
             }
 
@@ -92,7 +91,7 @@ class Player extends React.Component<Props, State> {
                         }}
                         onEnd={this.onEnd}
                     />
-                    : false}
+                    : "No song to play"}
             </div>
         )
     }

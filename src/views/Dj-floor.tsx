@@ -7,8 +7,7 @@ interface Props {
     props: any
 }
 interface State {
-    room: any,
-    hasSongAdded: boolean
+    room: any
 }
 class DjFloor extends React.Component<Props, State> {
     room: any
@@ -16,10 +15,8 @@ class DjFloor extends React.Component<Props, State> {
         super(props);
         this.room = new Room();
         this.state = {
-            room: false,
-            hasSongAdded: false,
+            room: false
         }
-        this.songAdded= this.songAdded.bind(this);
 
     }
 
@@ -37,14 +34,10 @@ class DjFloor extends React.Component<Props, State> {
         return true;
     }
 
-    songAdded() {
-        this.setState({hasSongAdded: true});
-        console.log("yes song has been added");
-    }
 
     renderDjCabin() {
         if (this.isRoomAdmin()) {
-            return <Cabin room={this.state.room} hasSongAdded={this.state.hasSongAdded}/>;
+            return true;
         }
     }
 
@@ -62,8 +55,7 @@ class DjFloor extends React.Component<Props, State> {
                         <h1> Currently playing  </h1>
                     </div>
                     <div  className="room-cabin">
-                        {this.renderDjCabin()}
-                        <RequestDj room={this.state.room} songAdded={this.songAdded}/>
+                        <Cabin room={this.state.room} />;
                     </div>
                 </div> : null }
             </div>

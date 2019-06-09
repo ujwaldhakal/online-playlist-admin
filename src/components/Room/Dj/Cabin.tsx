@@ -2,15 +2,16 @@ import React from 'react'
 import PlaylistList from './PlaylistList'
 import Player from './Player'
 import Room from './../../../entities/room'
+import RequestDj from "../AddSong";
 
 interface State {
     youtubelink: string;
-    songList: any
+    songList: any,
+    hasSongAdded : boolean
 };
 
 interface Props {
     room: any;
-    hasSongAdded : any
 }
 
 class Cabin extends React.Component<Props, State> {
@@ -21,9 +22,12 @@ class Cabin extends React.Component<Props, State> {
         super(props);
         this.state = {
             youtubelink: "",
-            songList: false
+            songList: false,
+            hasSongAdded: false,
         };
         this.room = new Room();
+        this.songAdded= this.songAdded.bind(this);
+
     }
 
     async componentDidMount() {
@@ -44,10 +48,15 @@ class Cabin extends React.Component<Props, State> {
     async componentWillReceiveProps(props : any) {
 
         if(props.hasSongAdded) {
-            await this.loadCurrentPlaylist();
+
         }
         console.log('old props' , this.props);
         console.log('new props' , props);
+    }
+
+
+    async songAdded() {
+        await this.loadCurrentPlaylist();
     }
 
     render() {
@@ -56,7 +65,8 @@ class Cabin extends React.Component<Props, State> {
                 {this.state.songList ?
                     <div>
                         <Player songList={this.state.songList} room={this.props.room} props={this.props}/>
-                        <PlaylistList songList={this.state.songList} room={this.props.room}/>
+                        <RequestDj room={this.props.room} songAdded={this.songAdded}/>
+                        <PlaylistList songList={this.state.songList} room={this.props.room} hasSongAdded={this.state.hasSongAdded}/>
                     </div>
 
                     : false}
