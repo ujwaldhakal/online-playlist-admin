@@ -1,9 +1,22 @@
 import React, { Component } from 'react'
 import { Row, Col, Avatar, Card, Icon } from 'antd';
 import AddRoom from '../components/Room/AddRoom';
-export default class Settings extends Component {
+import ListRoom from '../components/Room/ListRoom';
 
-    constructor(props) {
+interface Props
+{
+
+}
+
+interface State
+{
+    userAddModal : boolean
+}
+
+
+export default class Settings extends Component<Props,State> {
+
+    constructor(props : any) {
         super(props);
         this.state = {
             userAddModal: false,
@@ -23,28 +36,20 @@ export default class Settings extends Component {
                             <h2>User Details</h2>
                             <p><b>Name</b>: Ujjwal Dhakal</p>
                             <p><b>Type</b>: Admin</p>
-                            {/* <Card
-                                style={{ width: '100%' }}
-                                cover={
-                                    <img
-                                        alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                    />
-                                }
-                                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-                            >
-                                <Card.Meta
-                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title="Card title"
-                                    description="This is the description"
-                                />
-                            </Card>, */}
+
                         </Col>
+
                         <Col span={2}></Col>
                         <Col span={11} className="settings-box">
                             <Avatar className="m-b-20" size={64} icon="database" />
-                            <h2>Host Settings</h2>
+                            <h2>Be A DJ </h2>
                             <AddRoom />
+                        </Col>
+                        <br/>
+                        <Col span={11} className="settings-box">
+                            <Avatar className="m-b-20" size={64} icon="database" />
+                            <h2>List of existing room </h2>
+                            <ListRoom />
                         </Col>
                     </Row>
                 </div>

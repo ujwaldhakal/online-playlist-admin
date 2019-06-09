@@ -47,6 +47,21 @@ class Room {
         return this.requestOut.postPromise(`rooms/${roomId}/default/playlist/addsong`,{song_link: songLink})
     }
 
+    create(data)
+    {
+        return this.requestOut.postPromise('rooms',{name:data});
+    }
+
+
+    getList()
+    {
+        return this.requestOut.getPromise('rooms'+this.getFields());
+    }
+
+    delete(id)
+    {
+        return this.requestOut.deletePromise('rooms/'+id);
+    }
 }
 
 export default Room;
