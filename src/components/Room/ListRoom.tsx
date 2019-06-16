@@ -1,41 +1,40 @@
 import React, {Component} from 'react';
-import {Button, Icon, Input, List, Modal, Typography} from 'antd';
+import {Button, Icon, List, Modal, Typography} from 'antd';
 import Room from './../../entities/room';
-import {Redirect} from 'react-router';
+import {Link} from 'react-router-dom'
 
 interface Props {
 
 }
 
 interface State {
-    roomList : any,
-    modalVisible : boolean,
+    roomList: any,
+    modalVisible: boolean,
 }
 
 
 export default class ListRoom extends Component<Props, State> {
-    room : Room;
+    room: Room;
 
     constructor(props: any) {
         super(props);
         this.state = {
             roomList: [],
-            modalVisible : false
+            modalVisible: false
         }
         this.room = new Room();
     }
 
-    async componentDidMount()
-    {
+    async componentDidMount() {
 
     }
 
 
-    setModalVisible = async (value : any) => {
+    setModalVisible = async (value: any) => {
         try {
             let data = (await this.room.getList()).data;
-            this.setState({roomList: data,modalVisible: true});
-        }   catch (e) {
+            this.setState({roomList: data, modalVisible: true});
+        } catch (e) {
             console.log(e);
         }
     }
@@ -47,8 +46,7 @@ export default class ListRoom extends Component<Props, State> {
     }
 
 
-    delete = (id : string) =>
-    {
+    delete = (id: string) => {
         try {
             this.room.delete(id)
             this.closeModal();
@@ -62,7 +60,7 @@ export default class ListRoom extends Component<Props, State> {
         return (
             <div>
                 <Button type="primary" onClick={this.setModalVisible}>
-                   Room List
+                    Room List
                 </Button>
                 <Modal
                     title="Add Room"
@@ -74,11 +72,14 @@ export default class ListRoom extends Component<Props, State> {
                     <List
                         bordered
                         dataSource={this.state.roomList}
-                        renderItem={(item : any)=> (
-                            <List.Item>
-                                <Typography.Text mark>{item.name}</Typography.Text>  <Icon type="delete" onClick={() => this.delete(item.id)}/>
-                            </List.Item>
-                        )} />
+                        renderItem={(item: any) => (
+                            <Link to={item.slug + "/djroom"}>
+                                <List.Item>
+                                    <Typography.Text mark>{item.name}</Typography.Text> <Icon type="delete"
+                                                                                              onClick={() => this.delete(item.id)}/>
+                                </List.Item>
+                            </Link>
+                        )}/>
                 </Modal>
 
             </div>

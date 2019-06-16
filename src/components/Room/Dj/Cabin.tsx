@@ -3,6 +3,8 @@ import PlaylistList from './PlaylistList'
 import Player from './Player'
 import Room from './../../../entities/room'
 import RequestDj from "../AddSong";
+import {connect} from "react-redux";
+import Pusher from 'pusher-js';
 
 interface State {
     youtubelink: string;
@@ -12,14 +14,19 @@ interface State {
 
 interface Props {
     room: any;
+    user : any;
+
 }
 
 class Cabin extends React.Component<Props, State> {
 
     room: Room;
+    socket : any;
 
     constructor(props: any) {
         super(props);
+        console.log("this is here");
+        console.log(this.props);
         this.state = {
             youtubelink: "",
             songList: false,
@@ -27,8 +34,64 @@ class Cabin extends React.Component<Props, State> {
         };
         this.room = new Room();
         this.songAdded= this.songAdded.bind(this);
+        let self = this;
 
+        this.socket = new Pusher('d3f2886d77c3df491640', {
+            encrypted: false,
+            cluster: 'ap2'
+        });
+
+        this.bindSocketEvents();
     }
+
+    bindSocketEvents()
+    {
+        this.detectSongAddEvent();
+        this.detectSongChangeEvent();
+        this.detectCurrentSongMarkedAsPlaying();
+    }
+
+
+
+    detectSongChangeEvent()
+    {
+        let self = this;
+        const songChanged = this.socket.subscribe('song-changed');
+        songChanged.bind('OP\\Playlist\\Events\\AutoSongChanged', async function (data : any) {
+            self.reloadPlaylistAfterTimeout();
+        });
+    }
+
+    detectCurrentSongMarkedAsPlaying()
+    {
+        let self = this;
+        const songChanged = this.socket.subscribe('marked-as-current-song-playing');
+        songChanged.bind('OP\\Playlist\\Events\\SongPlayed', async function (data : any) {
+            self.reloadPlaylistAfterTimeout();
+        });
+    }
+
+    reloadPlaylistAfterTimeout()
+    {
+        let self = this;
+        setTimeout(
+            async function() {
+                await self.loadCurrentPlaylist();
+            }
+                .bind(self),
+            1000
+        );
+    }
+
+    detectSongAddEvent()
+    {
+        let self = this;
+        const songAdded = this.socket.subscribe('song-added');
+        songAdded.bind('OP\\Room\\Events\\SongAddedToDefaultPlaylist', async function (data : any) {
+            self.reloadPlaylistAfterTimeout();
+        });
+    }
+
 
     async componentDidMount() {
         await this.loadCurrentPlaylist();
@@ -39,19 +102,22 @@ class Cabin extends React.Component<Props, State> {
         try {
             let playlist = await this.room.getCurrentPlaylist(this.props.room.id);
             this.setState({songList: playlist.data})
-            console.log("setting state of new data");
         } catch (e) {
             console.log(e);
         }
     }
 
-    async componentWillReceiveProps(props : any) {
-
-        if(props.hasSongAdded) {
+    async componentWillReceiveProps(props: any) {
+        if (props.hasSongAdded) {
 
         }
-        console.log('old props' , this.props);
-        console.log('new props' , props);
+    }
+
+    renderPlayer()
+    {
+        if(this.props.user.id === this.props.room.dj_id) {
+            return <Player songList={this.state.songList} room={this.props.room} props={this.props}/>;
+        }
     }
 
 
@@ -64,17 +130,19 @@ class Cabin extends React.Component<Props, State> {
             <div>
                 {this.state.songList ?
                     <div>
-                        <Player songList={this.state.songList} room={this.props.room} props={this.props}/>
+                        {this.renderPlayer()}
                         <RequestDj room={this.props.room} songAdded={this.songAdded}/>
                         <PlaylistList songList={this.state.songList} room={this.props.room} hasSongAdded={this.state.hasSongAdded}/>
                     </div>
 
                     : false}
             </div>
-
         )
-
     }
 }
 
-export default Cabin;
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(Cabin);

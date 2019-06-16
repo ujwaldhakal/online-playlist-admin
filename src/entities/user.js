@@ -1,6 +1,6 @@
 import RequestOut from './../services/requestOut'
 
-class Playlist {
+class User {
 
     constructor() {
         this.fields = [
@@ -27,11 +27,6 @@ class Playlist {
         let url = 'playlists/' + playlistId + '/song/auto-change?song_id=' + songId;
         return this.requestOut.getPromise(url);
 
-    }
-
-    async markAsCurrentPlaying(songId)
-    {
-        return this.requestOut.getPromise(`playlists/songs/${songId}/playing`);
     }
 
 }

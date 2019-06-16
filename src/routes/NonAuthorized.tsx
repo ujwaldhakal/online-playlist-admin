@@ -9,8 +9,7 @@ const nonAuthorized = [
     {'route': <Route exact path="/login" key="login" render={() => <Login />}/>},
     {'route': <Route exact path="/register" key="register" render={() => <Register />}/>},
     {'route': <Route exact path="/" key="login" render={() => <Login />}/>},
-    {'route': <Route exact path="/dashboard" key="dashboard" render={() => <Settings />}/>},
-    {'route': <Route exact path="/:slug/djroom" key="djroom" render={(props : any) => <Room props={props}/>}/>},
+
 ];
 
 export default nonAuthorized;

@@ -24,8 +24,7 @@ export default class Settings extends Component<Props,State> {
     }
 
     render() {
-        return (
-            <div>
+        return (<div>
                 <div className="room-header">
                     <h1> Dashboard </h1>
                 </div>

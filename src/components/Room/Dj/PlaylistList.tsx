@@ -1,13 +1,12 @@
 import React from 'react'
 import Playlist from './../../../entities/playlist'
 import Storage from './../../../services/storage';
-import { Button } from 'antd'
-import { Avatar } from 'antd';
+import {Icon} from 'antd'
 
 
 interface State {
     playlists: any
-    songList : any
+    songList: any
 }
 
 interface playlistObject {
@@ -16,12 +15,13 @@ interface playlistObject {
     title: string,
     cover_image: string,
     link: string,
-    id : string
+    is_playing : number,
+    id: string
 }
 
 interface Props {
     room: any
-    songList : any
+    songList: any
     hasSongAdded: boolean
 }
 
@@ -50,10 +50,10 @@ class PlaylistList extends React.Component<Props, State> {
         }
     }
 
-    async componentWillReceiveProps(props : any) {
+    async componentWillReceiveProps(props: any) {
 
-        if(props.songList.length !== this.props.songList.length) {
-            this.setState({songList : props.songList})
+        if (props.songList.length !== this.props.songList.length) {
+            this.setState({songList: props.songList})
         }
     }
 
@@ -65,15 +65,17 @@ class PlaylistList extends React.Component<Props, State> {
                 <ul className="room-list">
                     {this.state.songList.map((item: playlistObject, index: number) => {
                         return <li key={index}>
-                            <img src={item.cover_image} />
+                            <img src={item.cover_image}/>
+
+                            {item.is_playing ? <Icon type="pause-circle"/> : false}
                             <a href={item.link} target="_blank">
-                            {item.title} added by {item.created_by}
+                                {item.title} added by {item.created_by}
                             </a>
                         </li>
                     })}
                 </ul>
             </div>
-        );
+        )
     }
 }
 
