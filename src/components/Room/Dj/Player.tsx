@@ -1,10 +1,13 @@
 import React from 'react'
 import YouTube from 'react-youtube';
 import Playlist from './../../../entities/playlist'
+import Room from './../../../entities/room'
+import {Button} from 'antd';
 
 interface State {
     songList: any
     currentSongToPlay: any
+    replayOption: boolean
 }
 
 interface Props {
@@ -16,27 +19,37 @@ interface Props {
 class Player extends React.Component<Props, State> {
 
     playlist: any;
+    room: any;
 
     constructor(props: any) {
         super(props);
         this.onEnd = this.onEnd.bind(this);
         this.state = {
             songList: this.props.songList,
-            currentSongToPlay: this.props.songList[0]
+            currentSongToPlay: this.props.songList[0],
+            replayOption: false
         }
 
+        this.room = new Room();
         this.playlist = new Playlist();
     }
 
     async componentWillReceiveProps(props: any) {
 
+        console.log('checking via props');
+        console.log(props.songList);
+        console.log(this.props.songList.length);
         if (props.songList.length !== this.props.songList.length) {
-            if(props.songList[0] !== undefined && props.songList[0].id !== undefined) {
+            if (props.songList[0] !== undefined && props.songList[0].id !== undefined) {
                 this.setState({currentSongToPlay: props.songList[0]})
                 this.playlist.markAsCurrentPlaying(props.songList[0].id);
                 console.log("1st time ok");
             }
         }
+    }
+
+    async componentDidMount() {
+        await this.replayOption();
     }
 
     getYoutubeId(url: string): any {
@@ -46,45 +59,48 @@ class Player extends React.Component<Props, State> {
     }
 
 
-
-
     async playSong() {
         this.setState({currentSongToPlay: this.state.songList[0]})
-        console.log(this.state.songList);
-        console.log("checking for 1st value");
-        // await this.playlist.markAsCurrentPlaying(this.state.songList[0].id);
+        await this.playlist.markAsCurrentPlaying(this.state.songList[0].id);
     }
 
     async onEnd() {
 
-        let data = this.state.songList,
-            shouldPlayNextSong = false,
-            self = this;
+        let self = this;
 
         await self.playlist.changeSong(this.state.currentSongToPlay.playlist_id, this.state.currentSongToPlay.id);
-        // data.map(function (item: any) {
-        //     if (item.is_playing) {
-        //         item.is_playing = 0;
-        //         shouldPlayNextSong = true;
-        //         return item;
-        //     }
-        //
-        //     if (!item.is_playing && shouldPlayNextSong) {
-        //         item.is_playing = 1;
-        //         shouldPlayNextSong = false;
-        //         console.log("ok song has been changed");
-        //         self.setState({currentSongToPlay: item});
-        //         self.playlist.markAsCurrentPlaying(item.id);
-        //     }
-        //
-        //     return item;
-        //
-        //
-        // });
-        //
-        // this.setState({songList: data});
 
     }
+
+    async replayOption() {
+        // // console.log('checking type');
+        // // console.log(typeof this.state.songList)
+        if (!this.state.songList.length && !this.state.currentSongToPlay) {
+
+            try {
+                let data = await this.room.getCurrentPlaylist(this.props.room.id);
+                console.log(data.data);
+                if (data.data.length) {
+                    this.setState({replayOption: true});
+                }
+            } catch (e) {
+                console.log(e);
+
+            }
+            //
+        }
+    }
+
+    replaySongs = () => {
+        console.log("clicked");
+    }
+
+
+    renderReplaybutton() {
+
+        return <button onClick={this.replaySongs}> Replay Songs </button>;
+    }
+
 
     render() {
         const opts = {
@@ -109,11 +125,11 @@ class Player extends React.Component<Props, State> {
                         }}
                         onEnd={this.onEnd}
                     />
-                    : "No song to play"}
-            </div>
-        )
-    }
-}
+                    : this.state.replayOption ? this.renderReplaybutton() : "No songs to play"}
+                    </div>
+                    )
+                }
+                }
 
 
-export default Player
+                export default Player

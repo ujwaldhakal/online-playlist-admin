@@ -41,14 +41,14 @@ class Cabin extends React.Component<Props, State> {
             cluster: 'ap2'
         });
 
-        this.bindSocketEvents();
+         this.bindSocketEvents();
     }
 
-    bindSocketEvents()
+    async bindSocketEvents()
     {
-        this.detectSongAddEvent();
-        this.detectSongChangeEvent();
-        this.detectCurrentSongMarkedAsPlaying();
+        await this.detectSongAddEvent();
+        await this.detectSongChangeEvent();
+        await this.detectCurrentSongMarkedAsPlaying();
     }
 
 
@@ -58,7 +58,8 @@ class Cabin extends React.Component<Props, State> {
         let self = this;
         const songChanged = this.socket.subscribe('song-changed');
         songChanged.bind('OP\\Playlist\\Events\\AutoSongChanged', async function (data : any) {
-            self.reloadPlaylistAfterTimeout();
+            console.log("caught this");
+            await self.reloadPlaylistAfterTimeout();
         });
     }
 
@@ -67,7 +68,7 @@ class Cabin extends React.Component<Props, State> {
         let self = this;
         const songChanged = this.socket.subscribe('marked-as-current-song-playing');
         songChanged.bind('OP\\Playlist\\Events\\SongPlayed', async function (data : any) {
-            self.reloadPlaylistAfterTimeout();
+            await self.reloadPlaylistAfterTimeout();
         });
     }
 
@@ -88,7 +89,8 @@ class Cabin extends React.Component<Props, State> {
         let self = this;
         const songAdded = this.socket.subscribe('song-added');
         songAdded.bind('OP\\Room\\Events\\SongAddedToDefaultPlaylist', async function (data : any) {
-            self.reloadPlaylistAfterTimeout();
+            console.log("catching added song");
+            await self.reloadPlaylistAfterTimeout();
         });
     }
 
@@ -100,7 +102,8 @@ class Cabin extends React.Component<Props, State> {
     async loadCurrentPlaylist( )
     {
         try {
-            let playlist = await this.room.getCurrentPlaylist(this.props.room.id);
+            let playlist = await this.room.getNotPlayedSongsFromCurrentPlaylist(this.props.room.id);
+            console.log("data",playlist);
             this.setState({songList: playlist.data})
         } catch (e) {
             console.log(e);
